@@ -1,70 +1,100 @@
-# Getting Started with Create React App
+## Configuring TDD Project
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Install following libraries:
 
-## Available Scripts
+```shell
+npx create-react-app lootcheck-react-tdd
+npm i react-test-renderer jest-cli enzyme @wojtekmaj/enzyme-adapter-react-17 --save-dev
+```
 
-In the project directory, you can run:
+Also configure src/setUpTests.js:
 
-### `yarn start`
+```js
+import '@testing-library/jest-dom';
+import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
+import Enzyme from 'enzyme';
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Enzyme.configure({ adapter: new Adapter() });
+```
+## Configuring Redux
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+Install the following
 
-### `yarn test`
+```shell
+npm i redux react-redux sfcookies --save
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Test Library configuration
 
-### `yarn build`
+1. Delete "src" folder
+2. Configure src/setUpTests.js (for tesing / Enzyme snapshoting):
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```js
+import '@testing-library/jest-dom';
+import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
+import Enzyme from 'enzyme';
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Enzyme.configure({ adapter: new Adapter() });
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+3. Create src/components/App.test.js file:
 
-### `yarn eject`
+```js
+const { shallow } = require("enzyme");
+const { default: App } = require("./App");
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+describe('App', () => {
+    const app = shallow(<App />);
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+    it('renders properly', () => {
+        expect(app).toMatchSnapshot();
+    });
+});
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+4. Create basic src/components/App.js file
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+```js
+import React, { Component } from 'react';
 
-## Learn More
+class App extends Component {
+    render() {
+        return (
+            <div>
+                <h2>Loot Check</h2>
+            </div>
+        );
+    }
+}
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+export default App;
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+5. Create index.js file to load App.js file
 
-### Code Splitting
+```js
+import React from 'react';
+import ReactDOM from 'react-dom';
+import App from "./components/App";
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+ReactDOM.render(
+    <React.StrictMode>
+      <App />
+    </React.StrictMode>,
+    document.getElementById('root')
+  );
+```
 
-### Analyzing the Bundle Size
+## Redux
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+3 step recipe:
+- The store is one data object for app 
+  - represents the state of the entire application.
 
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- Reducers update the store
+  - Each reducer is like a machine that knows how to update the store and what to update the store with
+  - Recureses cannot act alone though, they need message that tell them how to update the store
+  
+- Actions activate reducers (These are the messages)
+  - Actions are objects used to identify to the reducer how to update the store
+ 
