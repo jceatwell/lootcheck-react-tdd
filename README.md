@@ -1,3 +1,5 @@
+[![React.js CI](https://github.com/jceatwell/lootcheck-react-tdd/actions/workflows/react.js.yml/badge.svg)](https://github.com/jceatwell/lootcheck-react-tdd/actions/workflows/react.js.yml)
+
 ## Configuring TDD Project
 
 Install following libraries:
