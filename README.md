@@ -115,3 +115,5 @@ Bob --> Alice: Authentication Response
 Alice -> Bob:Another authentication Response
 Bob --> Alice: Another authentication Response
 ```
+
+![My-UML-diagram-name](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/jceatwell/lootcheck-react-tdd/main/docs/test.puml)

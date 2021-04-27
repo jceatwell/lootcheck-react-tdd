@@ -1,0 +1,12 @@
+@startuml
+title Déconnexion
+start
+    if (check filesize ?) is (not empty)
+      :read file;
+    else (empty)
+    :close file;
+    endif
+    -[#blue]->
+    :Do stuff;
+stop
+@enduml
