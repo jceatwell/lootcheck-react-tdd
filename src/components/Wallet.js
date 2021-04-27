@@ -6,7 +6,7 @@ export class Wallet extends Component {
     render() {
         return (
             <div>
-                <h3>Wallet balance: {this.props.balance}</h3>
+                <h3 className='balance'>Wallet balance: {this.props.balance}</h3>
             </div>
         );
     }
@@ -17,4 +17,4 @@ export class Wallet extends Component {
 // (1) -> Which part of the redux store do we wish to use with this component (mapStateToProps part of the connect function)
 // entire state from rootReducer is the balance Reducer at present (Returning a number). This is being mapped onto the props
 // (2) -> Which Action Creators do we want to use to send data to to redux store
-export default connect(state => { balance: state }, null)(Wallet);
+export default connect(state => {return  { balance: state} } , null)(Wallet);
