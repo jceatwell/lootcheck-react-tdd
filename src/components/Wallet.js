@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { deposit } from '../actions/balance';
 
 // Export unconnected to make testing easier -> Import using curly braces in test, else will import default
 export class Wallet extends Component {
@@ -13,15 +14,18 @@ export class Wallet extends Component {
     }
 
     updateBalance = event => {
-        this.setState({ balance: parseInt(event.target.value, 10)});
+        this.setState({ balance: parseInt(event.target.value, 10) });
     }
-    
+
+    deposit = () => this.props.deposit(this.state.balance);
+
     render() {
         return (
             <div>
                 <h3 className='balance'>Wallet balance: {this.props.balance}</h3>
-                <br/>
+                <br />
                 <input className='input-wallet' onChange={this.updateBalance} />
+                <button className='btn-deposit' onClick={this.deposit}>Deposit</button>
             </div>
         );
     }
@@ -35,5 +39,4 @@ export class Wallet extends Component {
 
 
 // Note round brackets remove necessity for { return {balance: state} }
-export default connect(state => ( { balance: state} ) , null)(Wallet);
-// OR export default connect(state => {return  { balance: state} } , null)(Wallet);
+export default connect(state => {return  { balance: state} } , {deposit})(Wallet);
