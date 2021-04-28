@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { deposit } from '../actions/balance';
+import { deposit, withdraw } from '../actions/balance';
 
 // Export unconnected to make testing easier -> Import using curly braces in test, else will import default
 export class Wallet extends Component {
@@ -19,6 +19,8 @@ export class Wallet extends Component {
 
     deposit = () => this.props.deposit(this.state.balance);
 
+    withdraw = () => this.props.withdraw(this.state.balance);
+
     render() {
         return (
             <div>
@@ -26,6 +28,7 @@ export class Wallet extends Component {
                 <br />
                 <input className='input-wallet' onChange={this.updateBalance} />
                 <button className='btn-deposit' onClick={this.deposit}>Deposit</button>
+                <button className='btn-withdraw' onClick={this.withdraw}>Withdraw</button>
             </div>
         );
     }
@@ -37,6 +40,8 @@ export class Wallet extends Component {
 // entire state from rootReducer is the balance Reducer at present (Returning a number). This is being mapped onto the props
 // (2) -> Which Action Creators do we want to use to send data to to redux store
 
-
 // Note round brackets remove necessity for { return {balance: state} }
-export default connect(state => {return  { balance: state} } , {deposit})(Wallet);
+// i.e. state => { return { balance: state } }, same as 
+export default connect(state => { return { balance: state } }, { deposit, withdraw })(Wallet);
+// OR
+// export default connect(state => ({ balance: state }), { deposit, withdraw })(Wallet);
