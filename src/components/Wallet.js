@@ -3,10 +3,25 @@ import { connect } from 'react-redux';
 
 // Export unconnected to make testing easier -> Import using curly braces in test, else will import default
 export class Wallet extends Component {
+    constructor() {
+        super();
+
+        // Local State
+        this.state = {
+            balance: undefined
+        }
+    }
+
+    updateBalance = event => {
+        this.setState({ balance: parseInt(event.target.value, 10)});
+    }
+    
     render() {
         return (
             <div>
                 <h3 className='balance'>Wallet balance: {this.props.balance}</h3>
+                <br/>
+                <input className='input-wallet' onChange={this.updateBalance} />
             </div>
         );
     }
