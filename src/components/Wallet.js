@@ -12,7 +12,7 @@ export class Wallet extends Component {
             balance: undefined
         }
     }
-
+ 
     updateBalance = event => {
         this.setState({ balance: parseInt(event.target.value, 10) });
     }

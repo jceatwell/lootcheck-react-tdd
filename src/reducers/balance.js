@@ -1,10 +1,6 @@
 import { bake_cookie, read_cookie } from 'sfcookies';
 import * as constants from '../actions/constants';
 
-// Read_cookie takes in a string as which cookie you want to read,
-// bake_cookie takes in a string as first argument, identifying which cookie you want to save
-// The second parameter is the item you want to store
-
 const BALANCE_COOKIE = 'BALANCE_COOKIE';
 
 const balance = (state = 0, action) => {
